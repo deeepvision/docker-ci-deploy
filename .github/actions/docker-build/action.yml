@@ -1,0 +1,5 @@
+name: 'Docker::Build'
+description: 'Builds docker image'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

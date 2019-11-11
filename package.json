@@ -1,0 +1,11 @@
+{
+  "name": "ci-deploy",
+  "scripts": {
+    "start": "ts-node src/deploy.ts"
+  },
+  "dependencies": {
+    "@types/node": "^12.12.7",
+    "ts-node": "^8.5.0",
+    "typescript": "^3.7.2"
+  }
+}
