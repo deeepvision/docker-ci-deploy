@@ -7,7 +7,7 @@ ENV \
     TERM=xterm \
     # Node options
     TS_NODE_PROJECT=/tsconfig.json \
-    NODE_PATH=/usr/local/lib/node_modules
+    NODE_PATH=/usr/local/lib/node_modules \
     # https://storage.googleapis.com/kubernetes-release/release/stable.txt
     KUBE_VERSION=1.16.2 \
     # https://github.com/digitalocean/doctl/releases
