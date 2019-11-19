@@ -9,9 +9,9 @@ ENV \
     TS_NODE_PROJECT=/tsconfig.json \
     NODE_PATH=/usr/local/lib/node_modules \
     # https://storage.googleapis.com/kubernetes-release/release/stable.txt
-    KUBE_VERSION=1.16.2 \
+    KUBE_VERSION=1.16.3 \
     # https://github.com/digitalocean/doctl/releases
-    DOCTL_VERSION=1.33.1
+    DOCTL_VERSION=1.34.0
 
 COPY ./rootfs /
 COPY ./src/deploy.ts /
