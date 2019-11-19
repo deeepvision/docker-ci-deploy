@@ -1,0 +1,5 @@
+name: 'Docker::Hub'
+description: 'Publish image to Docker hub'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

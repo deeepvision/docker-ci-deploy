@@ -10,3 +10,8 @@ jobs:
       - uses: ./.github/actions/docker-build
         env:
           GITHUB_DOCKER_TOKEN: ${{ secrets.GITHUB_DOCKER_TOKEN }}
+      - uses: ./.github/actions/docker-hub
+        env:
+          GITHUB_DOCKER_TOKEN: ${{ secrets.GITHUB_DOCKER_TOKEN }}
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
