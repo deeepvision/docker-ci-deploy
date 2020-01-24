@@ -1,11 +1,22 @@
 {
   "name": "ci-deploy",
   "scripts": {
-    "start": "ts-node src/deploy.ts"
+    "start": "ts-node -r dotenv/config src/deploy.ts",
+    "start:compose": "docker-compose -f dev/docker-compose.yml up",
+    "build": "docker build -t cloud-deploy .",
+    "start:docker": "docker run -it --rm -v /Users/sergii/deeepvision.github/deployments:/data/deployments --env-file .env.docker cloud-deploy",
+    "start:docker-bash": "docker run -it --rm -v /Users/sergii/deeepvision.github/deployments:/data/deployments --env-file .env.docker --entrypoint bash cloud-deploy"
   },
   "dependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/fs-extra": "^8.0.1",
     "@types/node": "^12.12.7",
+    "@types/yaml": "^1.2.0",
+    "bluebird": "^3.7.2",
+    "dotenv": "^8.2.0",
+    "fs-extra": "^8.1.0",
     "ts-node": "^8.5.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "yaml": "^1.7.2"
   }
 }

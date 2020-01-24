@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  deploy:
+    build:
+      context: ../
+    environment:
+      DEPLOY_CONFIG_PATH: /data/deployments
+      DEPLOY_SERVICE_REPO: git.deepvision.team/cear/api
+      DEPLOY_SERVICE_REF: heads/master
+    volumes:
+      - /Users/sergii/deeepvision.github/deployments:/data/deployments
