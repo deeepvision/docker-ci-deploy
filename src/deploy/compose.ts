@@ -2,7 +2,6 @@ import * as fs from 'fs-extra';
 import * as util from 'util';
 import { exec as execCb } from 'child_process';
 import { Deployment, Destination, Source } from '../tools';
-// import * as Bluebird from 'bluebird';
 
 const exec = util.promisify(execCb);
 
@@ -75,36 +74,16 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
     //
 
     console.log('Pulling images');
-    output = await exec(`docker-compose --verbose -f ${depYaml} -p ${deployment.id} pull`, { env });
-    console.log(output);
+    output = await exec(`docker-compose -f ${depYaml} -p ${deployment.id} pull`, { env });
+    console.log(output?.stderr);
     console.log('Starting containers');
     output = await exec(`docker-compose -f ${depYaml} -p ${deployment.id} up -d`, { env });
-    console.log(output);
-    //
-    // await fs.remove(certsPath);    let serviceYaml = `${projectRoot}/${repo}.yml`;
-    // if (tag) {
-    //     serviceYaml = `${projectRoot}/${repo}/${tag}.yml`;
-    // }
-    // if (serviceId) {
-    //     serviceYaml = `${projectRoot}/${repo}/${serviceId}.yml`;
-    // }
-    //
-    // console.log(`Using ${serviceYaml} for service deploy`);
-    // assert(await fs.pathExists(serviceYaml));
-    //
-    // const certsPath = `${scriptRoot}/certs`;
-    //
-    // await fs.outputFile(`${certsPath}/ca.pem`, certs.ca);
-    // await fs.outputFile(`${certsPath}/cert.pem`, certs.cert);
-    // await fs.outputFile(`${certsPath}/key.pem`, certs.key);
-    //
-    // const env = {
-    //     DOCKER_CERT_PATH: certsPath,
-    //     DOCKER_TLS_VERIFY: '1',
-    //     DOCKER_HOST: `tcp://${service.host}:2376`,
-    //     LD_LIBRARY_PATH: '/lib:/usr/lib',
-    //     PATH: '/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin',
-    // };
+    console.log(output?.stderr);
+
+    // Clean secure data
+    await fs.remove(certsPath);
+    await fs.remove('/root/.docker/config.json');
+
     //
     // if (serviceVersion) {
     //     await replace({
@@ -114,12 +93,4 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
     //     });
     // }
     //
-    // console.log(
-    //     await exec(`docker-compose -f ${serviceYaml} -p ${service.project} pull`, { env })
-    // );
-    // console.log(
-    //     await exec(`docker-compose -f ${serviceYaml} -p ${service.project} up -d`, { env })
-    // );
-    //
-    // await fs.remove(certsPath);
 };
