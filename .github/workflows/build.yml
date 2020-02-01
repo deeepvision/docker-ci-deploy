@@ -15,3 +15,11 @@ jobs:
           name: ci-deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: deeepvision/github-action-docker-hub@master
+        with:
+          githubName: ci-deploy
+          dockerHubUser: ${{ secrets.DOCKERHUB_USER }}
+          dockerHubPassword: ${{ secrets.DOCKERHUB_PASS }}
+          dockerHubName: deeepvision/ci-deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
