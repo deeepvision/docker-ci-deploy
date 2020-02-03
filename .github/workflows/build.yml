@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: deeepvision/github-action-docker-build@master
+      - uses: deeepvision/github-action-docker-build@release/1.0
         with:
           name: ci-deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: deeepvision/github-action-docker-hub@master
+      - uses: deeepvision/github-action-docker-hub@release/1.0
         with:
           githubName: ci-deploy
           dockerHubUser: ${{ secrets.DOCKERHUB_USER }}
