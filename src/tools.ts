@@ -11,6 +11,9 @@ export const getEnv = (key: string): string => {
     return value;
 };
 
+interface ComposeDeploymentConfig {
+    project?: string;
+}
 interface DeploymentConfig {
     repo: {
         url: string;
@@ -19,6 +22,7 @@ interface DeploymentConfig {
     };
     dest: string;
     sources?: Array<string>;
+    compose?: ComposeDeploymentConfig;
 }
 export interface Deployment {
     id: string;

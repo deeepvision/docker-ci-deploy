@@ -31,6 +31,7 @@ interface AuthConfig {
 export const compose = async (deployment: Deployment, destination: ComposeDestination, sources: Array<Source>, workDir: string) => {
     let output: ExecOutput | null = null;
     const depYaml = `${workDir}/compose.yml`;
+    const projectName = deployment.config.compose?.project ? deployment.config.compose.project : deployment.id;
 
     // Prepare the compose.yml
     const depConfigData = await fs.readFile(`${deployment.path}/compose.yml`);
@@ -74,10 +75,10 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
     //
 
     console.log('Pulling images');
-    output = await exec(`docker-compose -f ${depYaml} -p ${deployment.id} pull`, { env });
+    output = await exec(`docker-compose -f ${depYaml} -p ${projectName} pull`, { env });
     console.log(output?.stderr);
     console.log('Starting containers');
-    output = await exec(`docker-compose -f ${depYaml} -p ${deployment.id} up -d`, { env });
+    output = await exec(`docker-compose -f ${depYaml} -p ${projectName} up -d`, { env });
     console.log(output?.stderr);
 
     // Clean secure data
