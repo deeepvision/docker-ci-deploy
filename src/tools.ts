@@ -152,7 +152,7 @@ export const matchDeployments = (props: MatchDeploymentProps): Array<Deployment>
 
         const refParts = props.ref.split('/');
         if (refParts[0] === 'heads') {
-            if (refParts[1] === d.config.repo.branch) {
+            if (refParts.slice(1).join('/') === d.config.repo.branch) {
                 mathed.push(d);
             }
         }

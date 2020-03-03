@@ -17,6 +17,10 @@ const run = async () => {
         deployments,
     });
 
+    if (matched.length === 0) {
+        throw new Error(`Deployment for ${serviceRepo}:${serviceRef} not found`);
+    }
+
     for (const dep of matched) {
         const dest = destinations.find((dest) => {
             return dest.id === dep.config.dest;
