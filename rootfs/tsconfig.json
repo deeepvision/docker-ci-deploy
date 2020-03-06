@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es2019",
-    "strict": true,
     "baseUrl": "/usr/local/lib/node_modules",
     "typeRoots": [
       "/usr/local/lib/node_modules/@types"
