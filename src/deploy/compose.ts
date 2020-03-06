@@ -1,5 +1,6 @@
 import * as fs from 'fs-extra';
 import * as util from 'util';
+import * as hb from 'handlebars';
 import { exec as execCb } from 'child_process';
 import { Deployment, Destination, Source } from '../tools';
 
@@ -35,7 +36,14 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
 
     // Prepare the compose.yml
     const depConfigData = await fs.readFile(`${deployment.path}/compose.yml`);
-    await fs.writeFile(depYaml, depConfigData);
+    let depConfigFinalData = depConfigData.toString('utf8');
+    if (deployment.config.repo.tag) {
+        const tpl = hb.compile(depConfigFinalData);
+        depConfigFinalData = tpl({
+            version: deployment.config.repo.tag.replace('v', ''),
+        });
+    }
+    await fs.writeFile(depYaml, depConfigFinalData);
 
     // Prepare the Docker certs
     const certsPath = `${workDir}/certs`;
@@ -64,16 +72,6 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
     }
     await fs.outputFile('/root/.docker/config.json', JSON.stringify(authConfig));
 
-    //
-    // if (serviceVersion) {
-    //     await replace({
-    //         files: serviceYaml,
-    //         from: /{version}/g,
-    //         to: serviceVersion.replace('v', ''),
-    //     });
-    // }
-    //
-
     console.log('Pulling images');
     output = await exec(`docker-compose -f ${depYaml} -p ${projectName} pull`, { env });
     console.log(output?.stderr);
@@ -84,14 +82,4 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
     // Clean secure data
     await fs.remove(certsPath);
     await fs.remove('/root/.docker/config.json');
-
-    //
-    // if (serviceVersion) {
-    //     await replace({
-    //         files: serviceYaml,
-    //         from: /{version}/g,
-    //         to: serviceVersion.replace('v', ''),
-    //     });
-    // }
-    //
 };

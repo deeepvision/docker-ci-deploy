@@ -18,6 +18,7 @@ interface DeploymentConfig {
     repo: {
         url: string;
         branch?: string;
+        tagPattern?: string;
         tag?: string;
     };
     dest: string;
@@ -161,7 +162,12 @@ export const matchDeployments = (props: MatchDeploymentProps): Array<Deployment>
             }
         }
         if (refParts[0] === 'tags') {
+            const tagExpr = new RegExp(`^${d.config.repo.tagPattern}$`, 'u');
 
+            if (refParts[1].match(tagExpr)) {
+                d.config.repo.tag = refParts[1];
+                mathed.push(d);
+            }
         }
     }
 

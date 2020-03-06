@@ -48,6 +48,7 @@ RUN \
         fs-extra @types/fs-extra \
         yaml @types/yaml \
         bluebird @types/bluebird \
+        handlebars @types/handlebars \
         node-fetch @types/node-fetch && \
     \
     # Clean
