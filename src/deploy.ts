@@ -1,5 +1,6 @@
 import { getDeployments, getDestinations, getEnv, matchDeployments, getWorkDir, getSources, Source } from './tools';
 import { compose, ComposeDestination } from './deploy/index';
+import {isArray} from "util";
 
 const run = async () => {
     const configPath = getEnv('DEPLOY_CONFIG_PATH');
@@ -22,10 +23,14 @@ const run = async () => {
     }
 
     for (const dep of matched) {
-        const dest = destinations.find((dest) => {
+        const destMatched = destinations.filter((dest) => {
+            if (Array.isArray(dep.config.dest)) {
+                return dep.config.dest.includes(dest.id);
+            }
+
             return dest.id === dep.config.dest;
         });
-        if (!dest) {
+        if (destMatched.length === 0) {
             continue;
         }
 
@@ -38,13 +43,15 @@ const run = async () => {
             });
         }
 
-        const deployType = dest.id.split('/').shift();
-        switch (deployType) {
-            case 'compose':
-                await compose(dep, dest as ComposeDestination, src, workDir);
-                break;
-            default:
-                throw new Error(`Deploy type ${deployType} is not defined`);
+        for (const dest of destMatched) {
+            const deployType = dest.id.split('/').shift();
+            switch (deployType) {
+                case 'compose':
+                    await compose(dep, dest as ComposeDestination, src, workDir);
+                    break;
+                default:
+                    throw new Error(`Deploy type ${deployType} is not defined`);
+            }
         }
     }
 };

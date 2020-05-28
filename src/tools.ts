@@ -21,7 +21,7 @@ interface DeploymentConfig {
         tagPattern?: string;
         tag?: string;
     };
-    dest: string;
+    dest: string | Array<string>;
     sources?: Array<string>;
     compose?: ComposeDeploymentConfig;
 }

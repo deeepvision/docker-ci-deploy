@@ -30,6 +30,8 @@ interface AuthConfig {
 }
 
 export const compose = async (deployment: Deployment, destination: ComposeDestination, sources: Array<Source>, workDir: string) => {
+    console.log(`Deploying ${deployment.id} to ${destination.id}...`);
+
     let output: ExecOutput | null = null;
     const depYaml = `${workDir}/compose.yml`;
     const projectName = deployment.config.compose?.project ? deployment.config.compose.project : deployment.id;
