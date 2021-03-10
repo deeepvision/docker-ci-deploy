@@ -1,6 +1,5 @@
 import { getDeployments, getDestinations, getEnv, matchDeployments, getWorkDir, getSources, Source } from './tools';
 import { compose, ComposeDestination } from './deploy/index';
-import {isArray} from "util";
 
 const run = async () => {
     const configPath = getEnv('DEPLOY_CONFIG_PATH');

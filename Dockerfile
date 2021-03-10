@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 LABEL maintainer="s.sadovyi@deepvision.team"
 
@@ -9,13 +9,13 @@ ENV \
     TS_NODE_PROJECT=/tsconfig.json \
     NODE_PATH=/usr/local/lib/node_modules \
     # https://github.com/sgerrand/alpine-pkg-glibc/releases
-    GLIBC_VERSION=2.30-r0 \
+    GLIBC_VERSION=2.33-r0 \
     # https://storage.googleapis.com/kubernetes-release/release/stable.txt
-    KUBE_VERSION=1.17.1 \
+    KUBE_VERSION=1.20.4 \
     # https://github.com/digitalocean/doctl/releases
-    DOCTL_VERSION=1.37.0 \
+    DOCTL_VERSION=1.57.0 \
     # https://github.com/docker/compose/releases
-    COMPOSE_VERSION=1.25.1 \
+    COMPOSE_VERSION=1.28.5 \
     LD_LIBRARY_PATH=/lib:/usr/lib
 
 RUN \
@@ -46,9 +46,9 @@ RUN \
         typescript \
         ts-node @types/node \
         fs-extra @types/fs-extra \
-        yaml @types/yaml \
+        yaml \
         bluebird @types/bluebird \
-        handlebars @types/handlebars \
+        handlebars \
         node-fetch @types/node-fetch && \
     \
     # Clean
