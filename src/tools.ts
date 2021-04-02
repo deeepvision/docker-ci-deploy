@@ -14,6 +14,9 @@ export const getEnv = (key: string): string => {
 interface ComposeDeploymentConfig {
     project?: string;
 }
+interface CloudRunDeploymentConfig {
+    region: string;
+}
 interface DeploymentConfig {
     repo: {
         url: string;
@@ -24,6 +27,7 @@ interface DeploymentConfig {
     dest: string | Array<string>;
     sources?: Array<string>;
     compose?: ComposeDeploymentConfig;
+    cloudrun?: CloudRunDeploymentConfig;
 }
 export interface Deployment {
     id: string;

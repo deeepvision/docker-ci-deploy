@@ -6,7 +6,7 @@ import { Deployment, Destination, Source } from '../tools';
 
 const exec = util.promisify(execCb);
 
-interface ComposeDestination extends Destination {
+export interface ComposeDestination extends Destination {
     id: string;
     config: {
         host: string;

@@ -1,5 +1,5 @@
 import { getDeployments, getDestinations, getEnv, matchDeployments, getWorkDir, getSources, Source } from './tools';
-import { compose, ComposeDestination } from './deploy/index';
+import { compose, cloudrun, ComposeDestination, CloudRunDestination } from './deploy/index';
 
 const run = async () => {
     const configPath = getEnv('DEPLOY_CONFIG_PATH');
@@ -47,6 +47,9 @@ const run = async () => {
             switch (deployType) {
                 case 'compose':
                     await compose(dep, dest as ComposeDestination, src, workDir);
+                    break;
+                case 'cloudrun':
+                    await cloudrun(dep, dest as CloudRunDestination, src, workDir);
                     break;
                 default:
                     throw new Error(`Deploy type ${deployType} is not defined`);

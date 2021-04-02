@@ -1,20 +1,12 @@
 import { compose } from './compose';
-import { Destination } from '../tools';
+import type { ComposeDestination } from './compose';
 
-interface ComposeDestination extends Destination {
-    id: string;
-    config: {
-        host: string;
-        certs: {
-            ca: string;
-            cert: string;
-            key: string;
-        };
-    };
-}
-
+import { cloudrun } from './cloudrun';
+import type { CloudRunDestination } from './cloudrun';
 
 export {
     compose,
     ComposeDestination,
+    cloudrun,
+    CloudRunDestination,
 };
