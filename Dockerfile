@@ -49,6 +49,7 @@ RUN \
         yaml \
         bluebird @types/bluebird \
         handlebars \
+        googleapis \
         node-fetch @types/node-fetch && \
     \
     # Clean
