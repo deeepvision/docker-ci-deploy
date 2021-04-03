@@ -23,7 +23,7 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
         throw new Error('Deploy region must be specified');
     }
 
-    const serviceYaml = `${workDir}/service.yml`;
+    const serviceYaml = `${deployment.path}/service.yml`;
     const serviceConfigs = yaml.parseAllDocuments(
         await fs.readFile(serviceYaml, { encoding: 'utf-8' })
     );
