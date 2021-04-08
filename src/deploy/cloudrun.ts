@@ -76,16 +76,38 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
 
     } else {
         console.log(`Creating new service "namespaces/${project.projectNumber}/services/${serviceName}"`);
-        const res = await run.namespaces.services.create({
+        const serviceRes = await run.namespaces.services.create({
             parent: `namespaces/${project.projectNumber}`,
             requestBody: serviceKnativeSpec,
         }, {
             rootUrl: `https://${deployment.config.cloudrun.region}-run.googleapis.com/`,
         });
-        if (res.status === 200) {
-            console.log(`Service successfully created: ${JSON.stringify(res.data)}`);
+        if (serviceRes.status === 200) {
+            console.log(`Service successfully created: ${JSON.stringify(serviceRes.data)}`);
         } else {
             console.log('Something goes wrong...');
         }
+
+        const policyRes = await run.projects.locations.services.setIamPolicy({
+            resource: `projects/${projectId}/locations/${deployment.config.cloudrun.region}/services/${serviceName}`,
+            requestBody: {
+                policy: {
+                    bindings: [
+                        {
+                            members: ['allUsers'],
+                            role: 'roles/run.invoker',
+                        },
+                    ],
+                },
+            },
+        });
+
+        if (policyRes.status === 200) {
+            console.log(`Public access enabled: ${JSON.stringify(policyRes.data)}`);
+        } else {
+            console.log('Something goes wrong on setting policy...');
+        }
+
+
     }
 }
