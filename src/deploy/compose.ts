@@ -37,12 +37,25 @@ export const compose = async (deployment: Deployment, destination: ComposeDestin
     const projectName = deployment.config.compose?.project ? deployment.config.compose.project : deployment.id;
 
     // Prepare the compose.yml
+    let releaseVersion = '';
+    if (deployment.config.repo.tag) {
+        releaseVersion = deployment.config.repo.tag.replace('v', '');
+    }
+
+    const exprVersion = /release\/(?<version>\d+\.\d+\.\d+)$/gum;
+    if (deployment.config.repo.branch) {
+        const match = exprVersion.exec(deployment.config.repo.branch);
+        if (match && match.groups) {
+            releaseVersion = match.groups.version;
+        }
+    }
+
     const depConfigData = await fs.readFile(`${deployment.path}/compose.yml`);
     let depConfigFinalData = depConfigData.toString('utf8');
-    if (deployment.config.repo.tag) {
+    if (releaseVersion) {
         const tpl = hb.compile(depConfigFinalData);
         depConfigFinalData = tpl({
-            version: deployment.config.repo.tag.replace('v', ''),
+            version: releaseVersion,
         });
     }
     await fs.writeFile(depYaml, depConfigFinalData);
