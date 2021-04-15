@@ -161,7 +161,11 @@ export const matchDeployments = (props: MatchDeploymentProps): Array<Deployment>
 
         const refParts = props.ref.split('/');
         if (refParts[0] === 'heads') {
-            if (refParts.slice(1).join('/') === d.config.repo.branch) {
+            const branchExpr = new RegExp(`^${d.config.repo.branch}$`, 'u');
+            const branchName = refParts.slice(1).join('/');
+
+            if (branchName.match(branchExpr)) {
+                d.config.repo.branch = branchName;
                 mathed.push(d);
             }
         }
