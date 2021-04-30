@@ -35,6 +35,12 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
         throw new Error(`Service name is not defined in Knative spec`);
     }
 
+    // Add label to force creating of new revision
+    if (!serviceKnativeSpec.metadata?.labels) {
+        serviceKnativeSpec.metadata.labels = {};
+    }
+    serviceKnativeSpec.metadata.labels.buildDate = (new Date()).toISOString();
+
     const auth = new google.auth.GoogleAuth({
         credentials: {
             client_email: destination.config.serviceAccount.email,
