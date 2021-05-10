@@ -51,6 +51,7 @@ RUN \
         handlebars \
         googleapis \
         nanoid \
+        lodash-es \
         node-fetch @types/node-fetch && \
     \
     # Clean

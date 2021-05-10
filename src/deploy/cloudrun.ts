@@ -1,6 +1,7 @@
 import { createId, Deployment, Destination, Source } from '../tools';
 import * as fs from 'fs-extra';
 import * as yaml from 'yaml';
+import set from 'lodash-es/set';
 import { google, run_v1 } from 'googleapis';
 const run = google.run('v1');
 const cloudresourcemanager = google.cloudresourcemanager('v1');
@@ -35,11 +36,8 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
         throw new Error(`Service name is not defined in Knative spec`);
     }
 
-    // Add label to force creating of new revision
-    if (!serviceKnativeSpec.metadata?.annotations) {
-        serviceKnativeSpec.metadata.annotations = {};
-    }
-    serviceKnativeSpec.metadata.annotations['deepops/build'] = createId('b');
+    // Add annotation to force creating of new revision
+    set(serviceKnativeSpec, 'spec.template.metadata.annotations.deepops/build', createId('b'));
 
     const auth = new google.auth.GoogleAuth({
         credentials: {
