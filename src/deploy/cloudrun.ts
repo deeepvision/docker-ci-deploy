@@ -1,7 +1,7 @@
 import { createId, Deployment, Destination, Source } from '../tools';
 import * as fs from 'fs-extra';
 import * as yaml from 'yaml';
-import set from 'lodash-es/set';
+import { set } from 'lodash-es';
 import { google, run_v1 } from 'googleapis';
 const run = google.run('v1');
 const cloudresourcemanager = google.cloudresourcemanager('v1');
