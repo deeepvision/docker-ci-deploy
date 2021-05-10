@@ -36,10 +36,10 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
     }
 
     // Add label to force creating of new revision
-    if (!serviceKnativeSpec.metadata?.labels) {
-        serviceKnativeSpec.metadata.labels = {};
+    if (!serviceKnativeSpec.metadata?.annotations) {
+        serviceKnativeSpec.metadata.annotations = {};
     }
-    serviceKnativeSpec.metadata.labels['deepops/build'] = createId('b');
+    serviceKnativeSpec.metadata.annotations['deepops/build'] = createId('b');
 
     const auth = new google.auth.GoogleAuth({
         credentials: {
