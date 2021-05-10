@@ -39,7 +39,7 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
     if (!serviceKnativeSpec.metadata?.labels) {
         serviceKnativeSpec.metadata.labels = {};
     }
-    serviceKnativeSpec.metadata.labels.buildDate = (new Date()).toISOString();
+    serviceKnativeSpec.metadata.labels['build-date'] = (new Date()).toISOString();
 
     const auth = new google.auth.GoogleAuth({
         credentials: {
