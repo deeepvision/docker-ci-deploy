@@ -50,6 +50,7 @@ RUN \
         bluebird @types/bluebird \
         handlebars \
         googleapis \
+        nanoid \
         node-fetch @types/node-fetch && \
     \
     # Clean

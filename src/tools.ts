@@ -1,5 +1,6 @@
 import * as fs from 'fs-extra';
 import * as yaml from 'yaml';
+import { customAlphabet } from 'nanoid';
 
 export const getEnv = (key: string): string => {
     const value = process.env[key];
@@ -188,4 +189,9 @@ export const getWorkDir = async (): Promise<string> => {
     await fs.ensureDir(workDir);
 
     return workDir;
+};
+
+const generate = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 10);
+export const createId = (prefix: string) => {
+    return `jet${prefix}:${generate()}`;
 };

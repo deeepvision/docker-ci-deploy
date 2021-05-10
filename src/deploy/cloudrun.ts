@@ -1,4 +1,4 @@
-import { Deployment, Destination, Source } from '../tools';
+import { createId, Deployment, Destination, Source } from '../tools';
 import * as fs from 'fs-extra';
 import * as yaml from 'yaml';
 import { google, run_v1 } from 'googleapis';
@@ -39,7 +39,7 @@ export const cloudrun = async (deployment: Deployment, destination: CloudRunDest
     if (!serviceKnativeSpec.metadata?.labels) {
         serviceKnativeSpec.metadata.labels = {};
     }
-    serviceKnativeSpec.metadata.labels['build-date'] = String((new Date()).getTime());
+    serviceKnativeSpec.metadata.labels['deepops/build'] = createId('b');
 
     const auth = new google.auth.GoogleAuth({
         credentials: {
