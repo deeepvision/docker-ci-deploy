@@ -11,11 +11,11 @@ ENV \
     # https://github.com/sgerrand/alpine-pkg-glibc/releases
     GLIBC_VERSION=2.33-r0 \
     # https://storage.googleapis.com/kubernetes-release/release/stable.txt
-    KUBE_VERSION=1.20.4 \
+    KUBE_VERSION=1.21.2 \
     # https://github.com/digitalocean/doctl/releases
-    DOCTL_VERSION=1.57.0 \
+    DOCTL_VERSION=1.61.0 \
     # https://github.com/docker/compose/releases
-    COMPOSE_VERSION=1.28.5 \
+    COMPOSE_VERSION=1.29.2 \
     LD_LIBRARY_PATH=/lib:/usr/lib
 
 RUN \
